@@ -11,7 +11,7 @@ class ChatMessage {
   String? id;
 
   /// Actual text message.
-  String? text;
+  SelectableText? text;
 
   /// It's a [non-optional] pararmter which specifies the time the
   /// message was delivered takes a [DateTime] object.

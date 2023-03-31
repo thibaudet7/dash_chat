@@ -6,7 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:intl/intl.dart';
+//import 'package:intl/intl.dart';
 import 'package:dash_chat/dash_chat.dart';
 
 void main() async {
@@ -154,7 +154,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 onQuickReply: (Reply reply) {
                   setState(() {
                     messages.add(ChatMessage(
-                        text: reply.value,
+                        text: SelectableText(reply.value!),
                         createdAt: DateTime.now(),
                         user: user));
 
@@ -211,7 +211,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         String url = await taskSnapshot.ref.getDownloadURL();
 
                         ChatMessage message =
-                            ChatMessage(text: "", user: user, image: url);
+                            ChatMessage(text: SelectableText(""), user: user, image: url);
 
                         FirebaseFirestore.instance
                             .collection('messages')

@@ -39,11 +39,11 @@ class DashChat extends StatefulWidget {
   /// If provided will stop using the default controller
   /// i.e [TextEditingController] and will use this to update the
   /// text input field.
-  final String? text;
+  final SelectableText? text;
 
   /// If the text parameter is passed then onTextChange must also
   /// be passed.
-  final Function(String)? onTextChange;
+  final Function(SelectableText)? onTextChange;
 
   /// If the input TextField is disabled.
   final bool inputDisabled;
@@ -356,7 +356,7 @@ class DashChat extends StatefulWidget {
     this.scrollToBottomStyle = scrollToBottomStyle ?? new ScrollToBottomStyle();
   }
 
-  String? getVal() {
+  SelectableText? getVal() {
     return text;
   }
 
@@ -368,16 +368,16 @@ class DashChatState extends State<DashChat> {
   FocusNode? inputFocusNode;
   TextEditingController? textController;
   late ScrollController scrollController;
-  String _text = "";
+  SelectableText _text = SelectableText("");
   bool visible = false;
   GlobalKey inputKey = GlobalKey();
   double height = 48.0;
   bool showLoadMore = false;
-  String get messageInput => _text;
+  SelectableText get messageInput => _text;
   bool _initialLoad = true;
   Timer? _timer;
 
-  void onTextChange(String text) {
+  void onTextChange(SelectableText text) {
     if (visible) {
       changeVisible(false);
     }
@@ -405,7 +405,7 @@ class DashChatState extends State<DashChat> {
     scrollController = widget.scrollController ?? ScrollController();
     textController = widget.textController ?? TextEditingController();
     inputFocusNode = widget.focusNode ?? FocusNode();
-    WidgetsBinding.instance!.addPostFrameCallback(widgetBuilt);
+    WidgetsBinding.instance.addPostFrameCallback(widgetBuilt);
     super.initState();
   }
 

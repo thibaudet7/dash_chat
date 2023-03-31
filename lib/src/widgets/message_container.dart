@@ -104,7 +104,7 @@ class MessageContainer extends StatelessWidget {
             BoxDecoration(
               color: message.user.containerColor ??
                   (isUser
-                      ? Theme.of(context).accentColor
+                      ? Theme.of(context).colorScheme.secondary
                       : Color.fromRGBO(225, 225, 225, 1)),
               borderRadius: BorderRadius.circular(5.0),
             ),
@@ -166,10 +166,10 @@ class MessageContainer extends StatelessWidget {
   }
 
   Widget _buildMessageText() {
-    return messageTextBuilder?.call(message.text, message) ??
+    return messageTextBuilder?.call(message.text!.data, message) ??
         ParsedText(
           parse: parsePatterns,
-          text: message.text!,
+          text: message.text!.data!,
           style: TextStyle(
             color: message.user.color ??
                 (isUser ? Colors.white70 : Colors.black87),

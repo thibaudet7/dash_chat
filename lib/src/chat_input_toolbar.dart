@@ -13,8 +13,8 @@ class ChatInputToolbar extends StatelessWidget {
   final bool alwaysShowSend;
   final ChatUser user;
   final Function(ChatMessage)? onSend;
-  final String? text;
-  final Function(String)? onTextChange;
+  final SelectableText? text;
+  final Function(SelectableText)? onTextChange;
   final bool inputDisabled;
   final String Function()? messageIdGenerator;
   final Widget Function(Function)? sendButtonBuilder;
@@ -96,7 +96,7 @@ class ChatInputToolbar extends StatelessWidget {
                     child: TextField(
                       focusNode: focusNode,
                       onChanged: (value) {
-                        onTextChange!(value);
+                        onTextChange!(SelectableText(value));
                       },
                       onSubmitted: (value) {
                         if (sendOnEnter) {
@@ -134,18 +134,18 @@ class ChatInputToolbar extends StatelessWidget {
               if (showTraillingBeforeSend) ...trailling,
               if (sendButtonBuilder != null)
                 sendButtonBuilder!(() async {
-                  if (text!.length != 0) {
+                  if (text!.data!.length != 0) {
                     await onSend!(message);
 
                     controller!.text = "";
 
-                    onTextChange!("");
+                    onTextChange!(SelectableText(""));
                   }
                 })
               else
                 IconButton(
                   icon: Icon(Icons.send),
-                  onPressed: alwaysShowSend || text!.length != 0
+                  onPressed: alwaysShowSend || text!.data!.length != 0
                       ? () => _sendMessage(context, message)
                       : null,
                 ),
@@ -159,12 +159,12 @@ class ChatInputToolbar extends StatelessWidget {
   }
 
   void _sendMessage(BuildContext context, ChatMessage message) async {
-    if (text!.length != 0) {
+    if (text!.data!.length != 0) {
       await onSend!(message);
 
       controller!.text = "";
 
-      onTextChange!("");
+      onTextChange!(SelectableText(""));
 
       FocusScope.of(context).requestFocus(focusNode);
 
